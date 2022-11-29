@@ -1,0 +1,37 @@
+{% extends "base.html"%}
+{%block title %}Home {%endblock%} {% block content%}
+<h1 class="text-primary text-center">Getty's Software Blog</h1>
+
+{% for post in object_list %}
+<div class="card text-center bg-light container" >
+  <img class="card-img-top" src="https://www.pexels.com/photo/female-software-engineer-coding-on-computer-3861972/" alt="Card image cap" />
+  <div class="card-body">
+    <ul class="list-unstyled">
+      {% comment %} {% comment %} object_list contains the list of objects (usually, but not necessarily a queryset) that the view is operating upon.
+      {% endcomment %}
+      <li>
+      <h5 class= "fw-bold "> {{post.article_date}}</h5>
+      
+      
+        <a href="{% url 'postdetails' post.pk %}" class="card-title text-decoration-none h6 text-dark">
+        {{post.title}}</a>
+        - By: {{post.writer.last_name}} 
+        {{post.writer.first_name}}
+        <br />
+        <a href="{% url 'classification' post.categories %}" class="text-decoration-underline"> {{post.categories}}</a>
+         </br>
+        <p class="card-text">{{post.content|slice:"250"|safe}}
+        <a href="{% url 'postdetails' post.pk %}" class="fw-bold " >Read More</a>
+        </p>
+        {% if user.is_authenticated %}
+          <small><a href="{% url 'editarticle' post.pk %}"  class="text-danger text-center  btn btn-warning text-light btn-sm" role="button">Edit</a>
+          <a href="{% url 'deletearticle' post.pk %}"  class="text-danger text-center ms-3 btn btn-danger text-light btn-sm" role="button">Delete</a>
+        </li></small>
+        {% endif %}
+    </ul>
+  </div>
+</div>
+
+<br />
+{% endfor %}
+ {% endblock %}

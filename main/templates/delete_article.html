@@ -1,0 +1,16 @@
+{% extends "base.html"%} 
+{% block title %} Delete Article {% endblock %}
+{% block content%}
+<h1 class="text-primary text-center">Delete blog article</h1>
+<br />
+<br />
+<h4>Delete: {{ post.title}}</h4>
+</br>
+<div class="form-group">
+  <form method="POST">
+    {% csrf_token %}
+    <small class= "text-danger"> You are about to delete this Article are you sure!</small>
+    </br></br>
+    <button class="btn btn-danger">Delete Article</button>
+    {% endblock %}
+</div>

@@ -1,0 +1,4 @@
+{
+  "cSpell.enableFiletypes": ["django-html"],
+  "cSpell.words": ["aboutme", "deletearticle", "editarticle", "queryset", "urlpatterns"]
+}
