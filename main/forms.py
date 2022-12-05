@@ -4,7 +4,7 @@ from .models import Post, Categories
 # categories = [('My Software Developer Journey', 'My Software Developer Journey'),
 #               ('Travel', 'Travel'), ('Family', "Family"), ('Hiking', 'Hiking'), ('Health Awareness', 'Health Awareness'), ('Leaning Angular', 'Learning Angular')] "This is hard coded data"
 
-categories = Categories.objects.all().values_list('set', 'set')
+categories = Categories.objects.all().values_list('name', 'name')
 # this is a model data
 categories_list = []
 

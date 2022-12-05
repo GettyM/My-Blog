@@ -1,10 +1,10 @@
-{% extends "base.html"%}
+{% extends "base.html"%} {% load static %}
 {%block title %}Home {%endblock%} {% block content%}
-<h1 class="text-primary text-center">Getty's Software Blog</h1>
+<h1 class="text-primary text-center mt-5">Getty's Software Blog</h1>
 
 {% for post in object_list %}
 <div class="card text-center bg-light container" >
-  <img class="card-img-top" src="https://www.pexels.com/photo/female-software-engineer-coding-on-computer-3861972/" alt="Card image cap" />
+  <img class="card-img-top" src="{% static 'main/static/lady-developer.jpg' %}" alt="Card image cap" />
   <div class="card-body">
     <ul class="list-unstyled">
       {% comment %} {% comment %} object_list contains the list of objects (usually, but not necessarily a queryset) that the view is operating upon.
@@ -18,7 +18,7 @@
         - By: {{post.writer.last_name}} 
         {{post.writer.first_name}}
         <br />
-        <a href="{% url 'classification' post.categories %}" class="text-decoration-underline"> {{post.categories}}</a>
+        <a href="{% url 'categories-list' post.categories %}" class="text-decoration-underline"> {{post.categories}}</a>
          </br>
         <p class="card-text">{{post.content|slice:"250"|safe}}
         <a href="{% url 'postdetails' post.pk %}" class="fw-bold " >Read More</a>
@@ -34,4 +34,9 @@
 
 <br />
 {% endfor %}
+
+
+
+
+
  {% endblock %}

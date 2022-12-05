@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 # from datetime import datetime, date
+from django.template.defaultfilters import slugify
 
 # remember to register your models on admin.py file
 

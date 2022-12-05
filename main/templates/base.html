@@ -12,44 +12,73 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-
+{% load static %}
     <title>{% block title%} Getty's Blog {%endblock%}</title>
   </head>
   <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark container">
-  <div class="container-fluid">
-    <a class="navbar-brand fw-bold text-success" href="{% url 'home' %}">Getty</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-secondary container-fluid fixed-top">
+  <div class="container-fluid ">
+    <a class="navbar-brand fw-bold text-primary bg-light px-2" href="{% url 'home' %}">Getty</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'home'%}">Home</a>
+          <a class="nav-link active" aria-current="page"  href="{% url 'home'%}">Home</a>
         </li> 
       {% if user.is_authenticated %}
-        <li class="nav-item ">
-            <a class="nav-link active" href="{% url 'addarticle' %}" tabindex="-1" aria-disabled="true">Articles</a>
-          </li>
-        <li class="nav-item ">
-            <a class="nav-link active" href="{% url 'addcategories' %}" tabindex="-1" aria-disabled="true">Categories</a>
-          </li>
-        <li class="nav-item ">
-            <a class="nav-link active  text-danger" href="{% url 'logout' %}" tabindex="-1" aria-disabled="true">Sign Out</a>
-        </li>
+      <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Admin
+            </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'addarticle' %}">Add Articles</a></li>
+            <li><a class="dropdown-item" href="{% url 'addcategories' %}">Add Categories</a></li>
+          </ul>
+      </li>
+      <li class="nav-item ">
+            <a class="nav-link active" href="{% url 'addarticle' %}" tabindex="-1" aria-disabled="true"> Articles</a>
+      </li>
+      
+          
+      <li class="nav-item ">
+          <a class="nav-link active  text-danger" href="{% url 'logout' %}" tabindex="-1" aria-disabled="true">Sign Out</a>
+      </li>
       {% else %}
-       <li class="nav-item ">
+
+        {% if data_menu %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button"      data-bs-toggle="dropdown"        aria-expanded="false">
+             Categories
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li >
+                
+                {% for item in data_menu %}
+                <a class="dropdown-item" href="{% url 'categories-list' item %}" > {{ item }}</a>
+                {% comment %} <a class="dropdown-item" href="{% url 'categories-list' post.categories %}" class="text-decoration-underline"> {{ item }}</a> {% endcomment %}
+                {% endfor %}
+              </li>
+            </ul>
+          </li>
+        {% endif %}
+       
+        <li class="nav-item ">
           <a class="nav-link active" href="{% url 'register' %}" tabindex="-1" aria-disabled="true">Register</a>
         </li>
         
-        <li class="nav-item ">
+        
+       <li class="nav-item ">
           <a class="nav-link active" href="{% url 'login' %}" tabindex="-1" aria-disabled="true">Sign In</a>
-        </li>
+       </li>
+      
       {% endif %} 
       </ul>
+      
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button class="btn btn-outline-primary" type="submit">Search</button>
       </form>
       
     </div>
@@ -57,7 +86,13 @@
 </nav>
   </br>
     <div class="container">{% block content %}{% endblock %}</div>
-
+    <br>
+   {% block footer %} <footer class="py-3 bg-secondary fixed-bottom  ">
+            <p class="m-0 text-light text-center">
+            <small> Copyright &copy; Getrude Moyo</small>
+            </p>
+        </footer>
+{% endblock %}
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

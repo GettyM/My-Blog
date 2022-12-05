@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import AddArticleView, DeleteArticle, EditArticleView, Home, PostDetails, CategoriesView, ClassificationView
+from .views import AddArticleView, CategoriesListView, DeleteArticle, EditArticleView, Home, PostDetails, CategoriesView
 
 # we are using as_view function because we are using class based views
 urlpatterns = [
@@ -13,6 +13,7 @@ urlpatterns = [
     path('postdetails/<int:pk>/delete',
          DeleteArticle.as_view(), name='deletearticle'),
     path('categories/', CategoriesView.as_view(), name='addcategories'),
-    path('classification/<str:set>/', ClassificationView, name='classification')
+    path('categories-list/<str:set>/',
+         CategoriesListView, name='categories-list')
 
 ]

@@ -12,18 +12,31 @@ from django.urls import reverse_lazy
 class Home(ListView):
     model = Post
     template_name = 'home.html'
+    set = Categories.objects.all()
     ordering = ['-article_date']
 
+    def get_context_data(self, *args, **kwargs):
+        data_menu = Categories.objects.all()  # data is Categories QuerySet
+        context = super(Home, self).get_context_data(*args, **kwargs)
+        context["data_menu"] = data_menu
+        return context
 
-def ClassificationView(request, set):
+
+def CategoriesListView(request, set):
     category_articles = Post.objects.filter(categories=set)
     # categories is the field on our post model and set is the args in our url path
-    return render(request, 'classification.html', {'set': set.title(), 'category_articles': category_articles})
+    return render(request, 'categories-list.html', {'set': set.title(), 'category_articles': category_articles})
 
 
 class PostDetails(DetailView):
     model = Post
     template_name = 'post_details.html'
+
+    def get_context_data(self, *args, **kwargs):
+        data_menu = Categories.objects.all()  # data is Categories QuerySet
+        context = super(PostDetails, self).get_context_data(*args, **kwargs)
+        context["data_menu"] = data_menu
+        return context
 
 
 class AddArticleView(CreateView):
@@ -39,6 +52,12 @@ class CategoriesView(CreateView):
     model = Categories
     template_name = 'categories.html'
     fields = '__all__'
+
+    def get_context_data(self, *args, **kwargs):
+        data_menu = Categories.objects.all()  # data is Categories QuerySet
+        context = super(CategoriesView, self).get_context_data(*args, **kwargs)
+        context["data_menu"] = data_menu
+        return context
 
 
 class EditArticleView(UpdateView):

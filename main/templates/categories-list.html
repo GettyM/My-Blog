@@ -1,0 +1,31 @@
+{% extends "base.html"%} {% load static %} {%block title %}Home {%endblock%} {% block content%} {% if category_articles %}
+<h1 class="text-primary text-center mt-5">{{ set }}</h1>
+<ul>
+  {% for post in category_articles %}
+
+  <li>
+    <h5 class="fw-bold">{{post.article_date}}</h5>
+    <a href="{% url 'postdetails' post.pk %}" class="card-title text-decoration-none h6 text-dark">{{post.title}}</a>
+    - By: {{post.writer.last_name}} {{post.writer.first_name}}
+    <br />
+    {% comment %}
+    <h5 class="text-decoration-underline">{{post.categories}}</h5>
+    {% endcomment %}
+
+    <p class="card-text">
+      {{post.content|slice:"250"|safe}}
+      <a href="{% url 'postdetails' post.pk %}" class="fw-bold">Read More</a>
+    </p>
+    {% if user.is_authenticated %}
+    <small>
+      <a href="{% url 'editarticle' post.pk %}" class="text-danger text-center btn btn-warning text-light btn-sm" role="button">Edit</a>
+      <a href="{% url 'deletearticle' post.pk %}" class="text-danger text-center ms-3 btn btn-danger text-light btn-sm" role="button">Delete</a>
+    </small>
+  </li>
+  <br />
+  <br />
+  {% endif %} {% endfor %}
+</ul>
+{% else %}
+<h3 class="text-danger mt-5 text-center">Oops this Category doesn't exist!</h3>
+{% endif%} {% comment %} category_articles {% endcomment %} {% endblock %}
